@@ -152,7 +152,7 @@ public class HttpPostBuilder extends HttpParameterBuilder {
 	protected void addParameter(String name, CharSequence text, String contentType) {
 		try {
 			initOutput();
-			beginParameter(name, null, contentType + "; charset=\"" + mCharset + "\"");
+			beginParameter(name, contentType + "; charset=\"" + mCharset + "\"");
 			mWriter.append(CRLF).append(text);
 			endParameter();
 		} catch (IOException e) {
@@ -178,7 +178,7 @@ public class HttpPostBuilder extends HttpParameterBuilder {
 	protected void addParameter(String name, byte[] array, String contentType) {
 		try {
 			initOutput();
-			beginParameter(name, null, contentType);
+			beginParameter(name, contentType);
 			mWriter.append("Content-Transfer-Encoding: binary").append(CRLF).append(CRLF).flush();
 			mOutput.write(array);
 			mOutput.flush();
@@ -226,7 +226,7 @@ public class HttpPostBuilder extends HttpParameterBuilder {
 	public void addFile(String name, File file, String contentType, String filename) throws IOException {
 		if (mFileUpload) {
 			initOutput();
-			beginParameter(name, filename, contentType);
+			beginFileParameter(name, filename, contentType);
 			mWriter.append("Content-Transfer-Encoding: binary").append(CRLF).append(CRLF).flush();
 			DataInputStream dataInputStream = new DataInputStream(new FileInputStream(file));
 			byte[] bytes = new byte[(int) file.length()];
@@ -243,17 +243,23 @@ public class HttpPostBuilder extends HttpParameterBuilder {
 	/**
 	 * Begin writing a parameter
 	 * @param name field name
-	 * @param filename optional filename, set to null to skip usage
 	 * @param contentType content type
 	 */
-	private void beginParameter(String name, String filename, String contentType) {
+	private void beginParameter(String name, String contentType) {
 		mWriter.append("--").append(mBoundary).append(CRLF);
-		mWriter.append("Content-Disposition: form-data; name=\"").append(name).append("\"");
-		if (filename != null && !filename.isEmpty()) {
-			mWriter.append("; filename=\"").append(filename).append("\"");
-		}
-		mWriter.append(CRLF);
+		mWriter.append("Content-Disposition: form-data; name=\"").append(name).append("\"").append(CRLF);
+		mWriter.append("Content-Type: ").append(contentType).append(CRLF);
+	}
 
+	/**
+	 * Begin writing a file parameter
+	 * @param name field name
+	 * @param filename name of the file
+	 * @param contentType content type
+	 */
+	private void beginFileParameter(String name, String filename, String contentType) {
+		mWriter.append("--").append(mBoundary).append(CRLF);
+		mWriter.append("Content-Disposition: attachment; name=\"").append(name).append("\"; filename=\"").append(filename).append("\"").append(CRLF);
 		mWriter.append("Content-Type: ").append(contentType).append(CRLF);
 	}
 

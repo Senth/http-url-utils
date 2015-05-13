@@ -1,10 +1,8 @@
 package com.spiddekauga.http;
 
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.logging.Logger;
 
 /**
  * Builds HTTP GET and POST parameters.
