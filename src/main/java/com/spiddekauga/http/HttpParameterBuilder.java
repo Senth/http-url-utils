@@ -1,5 +1,6 @@
 package com.spiddekauga.http;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -12,8 +13,9 @@ class HttpParameterBuilder {
 	/**
 	 * Add a parameter to the request
 	 * @param name field name
+	 * @throws IOException
 	 */
-	public void addParameter(String name) {
+	public void addParameter(String name) throws IOException {
 		addParameter(name, (CharSequence) null);
 	}
 
@@ -21,8 +23,9 @@ class HttpParameterBuilder {
 	 * Add a parameter to the request
 	 * @param name field name
 	 * @param text the value of the parameter (can be null)
+	 * @throws IOException
 	 */
-	public void addParameter(String name, CharSequence text) {
+	public void addParameter(String name, CharSequence text) throws IOException {
 		addSeparator();
 		try {
 			mBuilder.append(URLEncoder.encode(name, mCharset));
@@ -38,8 +41,9 @@ class HttpParameterBuilder {
 	 * Add a parameter to the request
 	 * @param name field name
 	 * @param text the value of the parameter (can be null)
+	 * @throws IOException
 	 */
-	public void addParameter(String name, char[] text) {
+	public void addParameter(String name, char[] text) throws IOException {
 		addParameter(name, new String(text));
 	}
 
@@ -47,8 +51,9 @@ class HttpParameterBuilder {
 	 * Add a parameter to the request
 	 * @param name field name
 	 * @param number the value of the parameter (can be null)
+	 * @throws IOException
 	 */
-	public void addParameter(String name, Number number) {
+	public void addParameter(String name, Number number) throws IOException {
 		addParameter(name, String.valueOf(number));
 	}
 
@@ -56,8 +61,9 @@ class HttpParameterBuilder {
 	 * Add binary parameter.
 	 * @param name field name
 	 * @param array binary array. Will be encoded as a string and then URL-encoded.
+	 * @throws IOException
 	 */
-	public void addParameter(String name, byte[] array) {
+	public void addParameter(String name, byte[] array) throws IOException {
 		String byteString = new String(array);
 		addParameter(name, byteString);
 	}

@@ -135,7 +135,7 @@ public class HttpPostBuilder extends HttpParameterBuilder {
 	}
 
 	@Override
-	public void addParameter(String name, CharSequence text) {
+	public void addParameter(String name, CharSequence text) throws IOException {
 		if (!mFileUpload) {
 			super.addParameter(name, text);
 		} else {
@@ -148,20 +148,17 @@ public class HttpPostBuilder extends HttpParameterBuilder {
 	 * @param name field name
 	 * @param text value of the field
 	 * @param contentType type of content of value
+	 * @throws IOException
 	 */
-	protected void addParameter(String name, CharSequence text, String contentType) {
-		try {
-			initOutput();
-			beginParameter(name, contentType + "; charset=\"" + mCharset + "\"");
-			mWriter.append(CRLF).append(text);
-			endParameter();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	protected void addParameter(String name, CharSequence text, String contentType) throws IOException {
+		initOutput();
+		beginParameter(name, contentType + "; charset=\"" + mCharset + "\"");
+		mWriter.append(CRLF).append(text);
+		endParameter();
 	}
 
 	@Override
-	public void addParameter(String name, byte[] array) {
+	public void addParameter(String name, byte[] array) throws IOException {
 		if (!mFileUpload) {
 			super.addParameter(name, array);
 		} else {
@@ -174,18 +171,15 @@ public class HttpPostBuilder extends HttpParameterBuilder {
 	 * @param name field name
 	 * @param array binary array
 	 * @param contentType type of content value
+	 * @throws IOException
 	 */
-	protected void addParameter(String name, byte[] array, String contentType) {
-		try {
-			initOutput();
-			beginParameter(name, contentType);
-			mWriter.append("Content-Transfer-Encoding: binary").append(CRLF).append(CRLF).flush();
-			mOutput.write(array);
-			mOutput.flush();
-			endParameter();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	protected void addParameter(String name, byte[] array, String contentType) throws IOException {
+		initOutput();
+		beginParameter(name, contentType);
+		mWriter.append("Content-Transfer-Encoding: binary").append(CRLF).append(CRLF).flush();
+		mOutput.write(array);
+		mOutput.flush();
+		endParameter();
 	}
 
 	/**
@@ -274,15 +268,12 @@ public class HttpPostBuilder extends HttpParameterBuilder {
 	 * Finalizes the connection. Call getInputStream() on the HttpURLConnection to
 	 * connect.
 	 * @return a HttpURLConnection ready to make a connection and receive a response
+	 * @throws IOException
 	 */
-	public HttpURLConnection build() {
+	public HttpURLConnection build() throws IOException {
 		if (!mFileUpload) {
-			try {
-				initOutput();
-				mWriter.append(mBuilder.toString()).flush();;
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			initOutput();
+			mWriter.append(mBuilder.toString()).flush();;
 		} else {
 			mWriter.append("--").append(mBoundary).append("--").append(CRLF).flush();
 		}
