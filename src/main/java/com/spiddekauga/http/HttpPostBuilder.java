@@ -221,7 +221,6 @@ public class HttpPostBuilder extends HttpParameterBuilder {
 		if (mFileUpload) {
 			initOutput();
 			beginFileParameter(name, filename, contentType);
-			mWriter.append("Content-Transfer-Encoding: binary").append(CRLF).append(CRLF).flush();
 			DataInputStream dataInputStream = new DataInputStream(new FileInputStream(file));
 			byte[] bytes = new byte[(int) file.length()];
 			dataInputStream.readFully(bytes);
@@ -253,8 +252,9 @@ public class HttpPostBuilder extends HttpParameterBuilder {
 	 */
 	private void beginFileParameter(String name, String filename, String contentType) {
 		mWriter.append("--").append(mBoundary).append(CRLF);
-		mWriter.append("Content-Disposition: attachment; name=\"").append(name).append("\"; filename=\"").append(filename).append("\"").append(CRLF);
+		mWriter.append("Content-Disposition: form-data; name=\"").append(name).append("\"; filename=\"").append(filename).append("\"").append(CRLF);
 		mWriter.append("Content-Type: ").append(contentType).append(CRLF);
+		mWriter.append("Content-Transfer-Encoding: binary").append(CRLF).append(CRLF).flush();
 	}
 
 	/**
