@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Parses HTTP responses and converts them into common types
@@ -19,7 +18,7 @@ public class HttpResponseParser {
 	 * @throws IOException
 	 */
 	public static String getStringResponse(HttpURLConnection connection) throws IOException {
-		return getStringResponse(connection, StandardCharsets.UTF_8.name());
+		return getStringResponse(connection, "UTF-8");
 	}
 
 	/**

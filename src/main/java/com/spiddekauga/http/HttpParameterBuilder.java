@@ -3,7 +3,6 @@ package com.spiddekauga.http;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Builds HTTP GET and POST parameters.
@@ -91,7 +90,7 @@ class HttpParameterBuilder {
 	/** Added parameter */
 	protected boolean mAddedParameter = false;
 	/** Charset the parameters are encoded into */
-	protected String mCharset = StandardCharsets.UTF_8.name();
+	protected String mCharset = "UTF-8"; // Only in Java 7+ StandardCharsets.UTF_8.name();
 	/** The parameter builder */
 	protected StringBuilder mBuilder = new StringBuilder();
 }
