@@ -1,9 +1,9 @@
 package com.spiddekauga.http;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 
 /**
  * Create a new connection as a GET request
@@ -42,12 +42,12 @@ public class HttpGetBuilder extends HttpParameterBuilder {
 
 	/**
 	 * Build the connection
-	 * @return URLConnection with a GET request set
+	 * @return HttpURLConnection with a GET request set
 	 * @throws IOException
 	 * @throws MalformedURLException
 	 */
-	public URLConnection build() throws MalformedURLException, IOException {
-		URLConnection connection = new URL(mBuilder.toString()).openConnection();
+	public HttpURLConnection build() throws MalformedURLException, IOException {
+		HttpURLConnection connection = (HttpURLConnection) new URL(mBuilder.toString()).openConnection();
 		connection.setRequestProperty("Accept-Charset", mCharset);
 		return connection;
 	}

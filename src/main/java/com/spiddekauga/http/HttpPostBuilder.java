@@ -6,9 +6,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.UUID;
 
 /**
@@ -25,7 +25,7 @@ public class HttpPostBuilder extends HttpParameterBuilder {
 	 *         is found, or URL is null.
 	 */
 	public HttpPostBuilder(String url) throws MalformedURLException, IOException {
-		URLConnection connection = new URL(url).openConnection();
+		HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
 		initConnection(connection);
 	}
 
@@ -38,7 +38,7 @@ public class HttpPostBuilder extends HttpParameterBuilder {
 	 * @throws MalformedURLException
 	 */
 	public HttpPostBuilder(HttpGetBuilder getBuilder) throws MalformedURLException, IOException {
-		URLConnection connection = getBuilder.build();
+		HttpURLConnection connection = getBuilder.build();
 
 		// Set charset from existing connection
 		String charset = connection.getRequestProperty("Accept-Charset");
@@ -53,7 +53,7 @@ public class HttpPostBuilder extends HttpParameterBuilder {
 	 * @return HttpUrlConnection if you want to set your own headers before adding
 	 *         parameters.
 	 */
-	public URLConnection getURLConnection() {
+	public HttpURLConnection getHttpURLConnection() {
 		return mConnection;
 	}
 
@@ -71,7 +71,7 @@ public class HttpPostBuilder extends HttpParameterBuilder {
 	 * Initializes the connection and output
 	 * @param connection the connection to the server
 	 */
-	private void initConnection(URLConnection connection) {
+	private void initConnection(HttpURLConnection connection) {
 		mConnection = connection;
 		mConnection.setDoOutput(true);
 		setCharset(mCharset);
@@ -273,11 +273,12 @@ public class HttpPostBuilder extends HttpParameterBuilder {
 	}
 
 	/**
-	 * Finalizes the connection. Call getInputStream() on the URLConnection to connect.
-	 * @return a URLConnection ready to make a connection and receive a response
+	 * Finalizes the connection. Call getInputStream() on the HttpURLConnection to
+	 * connect.
+	 * @return a HttpURLConnection ready to make a connection and receive a response
 	 * @throws IOException
 	 */
-	public URLConnection build() throws IOException {
+	public HttpURLConnection build() throws IOException {
 		if (!mFileUpload) {
 			initOutput();
 			mWriter.append(mBuilder.toString()).flush();;
@@ -288,7 +289,7 @@ public class HttpPostBuilder extends HttpParameterBuilder {
 		return mConnection;
 	}
 
-	private URLConnection mConnection = null;
+	private HttpURLConnection mConnection = null;
 	private OutputStream mOutput = null;
 	private PrintWriter mWriter = null;
 	private String mBoundary = UUID.randomUUID().toString();
