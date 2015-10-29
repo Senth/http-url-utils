@@ -3,7 +3,7 @@ apply plugin: 'java'
 apply plugin: 'maven'
 
 group = 'com.spiddekauga.http'
-version = '0.2.2'
+version = '0.3.0'
 
 task sourceJar(type: Jar) {
 	classifier = 'sources'
