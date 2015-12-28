@@ -3,65 +3,65 @@ apply plugin: 'java'
 apply plugin: 'maven'
 
 group = 'com.spiddekauga.http'
-version = '0.3.2-SNAPSHOT'
+version = '0.3.2'
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
 task sourceJar(type: Jar) {
-	classifier = 'sources'
-	from sourceSets.main.allJava
+    classifier = 'sources'
+    from sourceSets.main.allJava
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-	classifier = 'javadoc'
-	from javadoc.destinationDir
+    classifier = 'javadoc'
+    from javadoc.destinationDir
 }
 
 artifacts {
-	archives sourceJar
-	archives javadocJar
+    archives sourceJar
+    archives javadocJar
 }
 
 
 configurations {
-	deployerJars
-	provided
+    deployerJars
+    provided
 }
 
 sourceSets {
-	main { compileClasspath += configurations.provided }
+    main { compileClasspath += configurations.provided }
 }
 
 dependencies {
-	deployerJars 'org.apache.maven.wagon:wagon-ssh:2.2'
+    deployerJars 'org.apache.maven.wagon:wagon-ssh:2.2'
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
-install  {
-	repositories.mavenInstaller {
-		pom.artifactId = project.name
-	}
+install {
+    repositories.mavenInstaller {
+        pom.artifactId = project.name
+    }
 }
 
 uploadArchives {
-	repositories {
-		// Set mavenRepositoryUrl & mavenUserName inside gradle.properties
-		mavenDeployer {
-			configuration = configurations.deployerJars
- 			pom.artifactId = project.name
-			repository(url: mavenRepositoryUrl + '/releases') {
-				authentication(userName: mavenUserName)
-			}
-			snapshotRepository(url: mavenRepositoryUrl + '/snapshots') {
-				authentication(userName: mavenUserName)
-			}
-		}
-	}
+    repositories {
+        // Set mavenRepositoryUrl & mavenUserName inside gradle.properties
+        mavenDeployer {
+            configuration = configurations.deployerJars
+            pom.artifactId = project.name
+            repository(url: mavenRepositoryUrl + '/releases') {
+                authentication(userName: mavenUserName)
+            }
+            snapshotRepository(url: mavenRepositoryUrl + '/snapshots') {
+                authentication(userName: mavenUserName)
+            }
+        }
+    }
 }
 
 eclipse.project {
-	name = project.name
+    name = project.name
 }
