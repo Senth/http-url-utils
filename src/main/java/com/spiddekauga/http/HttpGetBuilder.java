@@ -7,7 +7,7 @@ import java.net.URL;
 
 /**
  * Create a new connection as a GET request
- * @author Matteus Magnusson <matteus.magnusson@spiddekauga.com>
+ * @author Matteus Magnusson (matteus.magnusson@spiddekauga.com)
  */
 public class HttpGetBuilder extends HttpParameterBuilder {
 	/**

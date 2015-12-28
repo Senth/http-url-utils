@@ -6,7 +6,7 @@ import java.net.URLEncoder;
 
 /**
  * Builds HTTP GET and POST parameters.
- * @author Matteus Magnusson <matteus.magnusson@spiddekauga.com>
+ * @author Matteus Magnusson (matteus.magnusson@spiddekauga.com)
  */
 class HttpParameterBuilder {
 	/**

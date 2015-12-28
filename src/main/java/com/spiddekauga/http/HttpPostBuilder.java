@@ -13,7 +13,7 @@ import java.util.UUID;
 
 /**
  * Builds a new HTTP URL Connection
- * @author Matteus Magnusson <matteus.magnusson@spiddekauga.com>
+ * @author Matteus Magnusson (matteus.magnusson@spiddekauga.com)
  */
 public class HttpPostBuilder extends HttpParameterBuilder {
 	/**
@@ -74,8 +74,8 @@ public class HttpPostBuilder extends HttpParameterBuilder {
 	private void initConnection(HttpURLConnection connection) {
 		mConnection = connection;
 		mConnection.setDoOutput(true);
-		setCharset(mCharset);
-		resetContentTypeBondary();
+		// setCharset(mCharset);
+		// resetContentTypeBondary();
 	}
 
 	/**
@@ -281,7 +281,7 @@ public class HttpPostBuilder extends HttpParameterBuilder {
 	public HttpURLConnection build() throws IOException {
 		if (!mFileUpload) {
 			initOutput();
-			mWriter.append(mBuilder.toString()).flush();;
+			mWriter.append(mBuilder.toString()).flush();
 		} else {
 			mWriter.append("--").append(mBoundary).append("--").append(CRLF).flush();
 		}

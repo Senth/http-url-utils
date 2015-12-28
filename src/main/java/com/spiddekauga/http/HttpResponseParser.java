@@ -8,7 +8,7 @@ import java.net.HttpURLConnection;
 
 /**
  * Parses HTTP responses and converts them into common types
- * @author Matteus Magnusson <matteus.magnusson@spiddekauga.com>
+ * @author Matteus Magnusson (matteus.magnusson@spiddekauga.com)
  */
 public class HttpResponseParser {
 	/**
