@@ -13,7 +13,6 @@ import java.util.UUID;
 
 /**
  * Builds a new HTTP URL Connection
- * @author Matteus Magnusson (matteus.magnusson@spiddekauga.com)
  */
 public class HttpPostBuilder extends HttpParameterBuilder {
 	/**
@@ -75,7 +74,7 @@ public class HttpPostBuilder extends HttpParameterBuilder {
 		mConnection = connection;
 		mConnection.setDoOutput(true);
 		// setCharset(mCharset);
-		// resetContentTypeBondary();
+		resetContentTypeBondary();
 	}
 
 	/**
