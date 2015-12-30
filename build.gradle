@@ -3,7 +3,7 @@ apply plugin: 'java'
 apply plugin: 'maven'
 
 group = 'com.spiddekauga.http'
-version = '0.3.2'
+version = '0.3.3'
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 

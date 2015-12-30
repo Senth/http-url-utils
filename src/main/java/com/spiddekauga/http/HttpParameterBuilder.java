@@ -75,8 +75,9 @@ public void addParameter(String name, CharSequence text) throws IOException {
 	addSeparator();
 	try {
 		mBuilder.append(URLEncoder.encode(name, mCharset));
+		mBuilder.append("=");
 		if (text != null && text.length() > 0) {
-			mBuilder.append("=").append(URLEncoder.encode(text.toString(), mCharset));
+			mBuilder.append(URLEncoder.encode(text.toString(), mCharset));
 		}
 	} catch (UnsupportedEncodingException e) {
 		e.printStackTrace();
